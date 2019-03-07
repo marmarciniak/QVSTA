@@ -1,9 +1,25 @@
 Main steps of building my solutions:
 1. Setting up an virtual enviroment and git project
-2. Creating an API. In that step I needed to think about in what way user can pass me the url that should be analysed by the application. I've decided that user need to post JSON in format {"url": "url_to_webpage_that_app_should_analyse"}.
-3. Writing a function that analyse url - I've decided to use urllib library to get a html from the page and then analyse this html content with BeautifulSoup library. Logic is pretty simple - check if page is accessible, if not pass to response error message and status, if yes extract needed data using BeautifulSoup (and requests library to check if links on the page are accessible). I've assumed that internal links are always accessible. Also, when checking for a HTML version from docstring, I mapped only the most popular versions, so if page is using different HTML than one of the eight that I've mapped the result is going to be "unknown". 
-4. Cache settings - with the help of stackoverflow and django documentation I've decided to use signed_cookies session engine for that, because it allowed me to set time of data storage in a simple way.
+2. Creating an API. In that step I needed to think about in what way user can pass me the url that should be analysed by the application.
+I've decided that user need to post JSON in format {"url": "url_to_webpage_that_app_should_analyse"}.
+3. Writing a function that analyse url - I've decided to use urllib library to get a html from the page and then analyse this html
+content with BeautifulSoup library. Logic is pretty simple - check if page is accessible, if not pass to response error message and status,
+if yes extract needed data using BeautifulSoup (and requests library to check if links on the page are accessible).
+I've assumed that internal links are always accessible. Also, when checking for a HTML version from docstring, I mapped only the most 
+popular versions, so if page is using different HTML than one of the eight that I've mapped the result is going to be "unknown". 
+4. Cache settings - with the help of stackoverflow and django documentation I've decided to use signed_cookies session engine for that,
+because it allowed me to set time of data storage in a simple way.
 
-The project took me about 5-6 hours. I've spent some time wondering about using models and saving results in database, but in the end I've decided not to. It also tooke me a while to decide which library to use for html analysis and maybe if I would do it again I would use Mechanize instead of BeautifulSoup, but BeautifulSoup was the first that come to my mind, because I've actually use it before at work. Getting HTML version also took me some time, because I wasn't sure what is the best way to do that, but after reading couple articles and stackoverflow questions I don't think that there is any other way that just simply map the docstring to version. I've also never configured cache on the page before, so it also took me a while.
+The project took me about 5-6 hours. I've spent some time wondering about using models and saving results in database,
+but in the end I've decided not to. It also tooke me a while to decide which library to use for html analysis and maybe if I would do 
+it again I would use Mechanize instead of BeautifulSoup, but BeautifulSoup was the first that come to my mind, because I've actually use
+it before at work. Getting HTML version also took me some time, because I wasn't sure what is the best way to do that, but after reading
+couple articles and stackoverflow questions I don't think that there is any other way that just simply map the docstring to version.
+I've also never configured cache on the page before, so it also took me a while.
 
-I wasn't able to get information if the page contains a login-form. I've tried using Mechanize library for that, because I've found out that it has ability to list all forms in the page. But after testing it, I still couldn't get a clear info if any of the forms is a login form (I wasn't sure which parameter of the form could clearly indicate that it is a login form - I've tried using form.name, but not all forms has it,  any of the attributes (form.attrs) also doesn't clearly indicate login form). Also when I test it on the page that clearly contained login form Mechanize didn't find any form on the page. I couldn't find any other library that would be helpful in finding login form on the page.
+I wasn't able to get information if the page contains a login-form. I've tried using Mechanize library for that, because I've found out
+that it has ability to list all forms in the page. But after testing it, I still couldn't get a clear info if any of the forms is a login
+form (I wasn't sure which parameter of the form could clearly indicate that it is a login form - I've tried using form.name, but not all
+forms has it,  any of the attributes (form.attrs) also doesn't clearly indicate login form). Also when I test it on the page that clearly 
+contained login form Mechanize didn't find any form on the page. I couldn't find any other library that would be helpful in finding login
+form on the page.
